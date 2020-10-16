@@ -1,0 +1,5 @@
+Dimmer  GH_LivingRm_volume <sound>
+Dimmer  GH_WCmaster_volume <sound>
+Switch	GH_LivingRm_play <wallswitch> { expire="15s,command=OFF" }
+Switch	GH_WCmaster_play <wallswitch> { expire="2m,command=OFF" }
+Switch	GH_LivingRm_mute <wallswitch> { expire="10m,command=ON" }

@@ -1,0 +1,39 @@
+rule "System started file Spot_lights_diningtable"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Spot_lights_diningtable.rules")
+end
+
+rule "Dining table"
+when
+Item MS8 changed 
+then
+    if (MS8.state == ON) {
+        if(MS8_Lux.state < 400.0 || MS7.state == OFF) {
+            MS8_MotionTimer.sendCommand(5)
+            S5_1.sendCommand(ON)
+            sendCommand( glights_kitchen_dim, "25")
+            sendCommand( glights_kitchen_temp, "67") 
+			} 
+        }
+    if (MS8.state == OFF) {
+        MS8_MotionTimer.sendCommand(5)
+        var Timer offTimer
+	    offTimer = createTimer(now.plusMinutes(7)) [|
+		if (g_Present_Diningtable.state == ON) {
+				offTimer.reschedule(now.plusMinutes(7))
+			} else {
+				sendCommand( L6, OFF)
+              } 
+			]
+        }
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

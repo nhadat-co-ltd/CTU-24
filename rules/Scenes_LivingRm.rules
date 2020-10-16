@@ -1,0 +1,77 @@
+rule "System started file Scenes_LivingRm"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Scenes_LivingRm.rules")
+end
+
+rule "Cosy intimate"
+when
+    Channel "mihome:86sw2:04cf8cf68836:158d0002b49f5e:ch1" triggered SHORT_PRESSED
+then
+    sendCommand( L3, ON)
+    sendCommand( L4, ON)
+    sendCommand( L24, ON)
+    sendCommand( glights_livingrm_dim, "100")
+    sendCommand( glights_livingrm_temp , "67")
+    sendCommand( L2, OFF)
+end
+
+rule "Movie night"
+when
+    Channel "mihome:86sw2:04cf8cf68836:158d0002b49f5e:ch2" triggered SHORT_PRESSED
+then
+    sendCommand( L4, ON)
+    sendCommand( glights_livingrm_dim, "40")
+    sendCommand( glights_livingrm_temp , "67")
+    sendCommand( L2, OFF)
+    sendCommand( L24, OFF)
+    sendCommand( L3, OFF)
+end
+
+rule "OFF"
+when
+    Channel "mihome:86sw2:04cf8cf68836:158d0002b49f5e:dual_ch" triggered SHORT_PRESSED
+then
+    sendCommand( L2, OFF)
+    sendCommand( L3, OFF)
+    sendCommand( L4, OFF)
+    sendCommand( L24, OFF)
+    Thread::sleep(2000)
+    sendCommand( glights_livingrm_dim, "40")
+    Thread::sleep(2000)
+    sendCommand( glights_livingrm_dim, "30")
+    Thread::sleep(2000)
+    sendCommand( glights_livingrm_dim, "20")
+    Thread::sleep(2000)
+    sendCommand( glights_livingrm_dim, "10")
+    Thread::sleep(2000)
+    sendCommand( glights_livingrm_dim, "0")
+end
+
+rule "Full Lights"
+when
+Item L2 changed 
+then
+if (L2.state == ON) {
+    sendCommand( glights_livingrm_dim, "100")
+    sendCommand( glights_livingrm_temp, "30")
+    sendCommand( L3, ON)
+    sendCommand( L4, ON)
+    sendCommand( L24, ON)
+        }
+    if (L2.state == OFF) {
+        sendCommand( L3, OFF)
+        sendCommand( L4, OFF)
+        sendCommand( L24, OFF)
+        sendCommand( glights_livingrm, OFF)                
+        }
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

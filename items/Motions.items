@@ -1,0 +1,49 @@
+Switch MS1 "Garage Motion Detect" (MS_Security,g_Orientation_Livingrm) [ "MotionSensor" ]
+Number MS1_MotionTimer <clock> 
+Number MS1_Lux "LUX [%.1f]" 
+Group:Switch:OR(ON,OFF) g_MS_Livingrm "Living room Motion Detect"  [ "MotionSensor" ]
+Switch MS2 "Livingrm 1 Motion Detect" (g_MS_Livingrm) 
+Number MS2_MotionTimer 
+Number MS2_Lux "LUX [%.1f]"
+Switch MS3 "Livingrm 2 Motion Detect" (g_MS_Livingrm) 
+Number MS3_MotionTimer 
+Number MS3_Lux "LUX [%.1f]" 
+Switch MS4 "Livingrm 3 Motion Detect" (g_MS_Livingrm) 
+Number MS4_MotionTimer 
+Switch MS5 "Stair 1 Motion Detect" (g_Orientation_Livingrm,g_Orientation_Kitchen) 
+Number MS5_MotionTimer 
+Number MS5_Lux "LUX [%.1f]" 
+Group:Switch:OR(ON,OFF) g_MS_Kitchen "Kitchen Motion Detect"  [ "MotionSensor" ]
+Switch MS6 "Kitchen Motion Detect" (g_MS_Kitchen,g_Present_Sink,g_Present_Diningtable) 
+Number MS6_MotionTimer 
+Number MS6_Lux "LUX [%.1f]" 
+Switch MS7 "Kidzone Motion Detect" (g_MS_Kitchen,g_Present_Sink) 
+Number MS7_MotionTimer 
+Number MS7_Lux "LUX [%.1f]" 
+Switch MS8 "Dining Table Motion Detect" (g_MS_Kitchen,g_Present_Diningtable) 
+Number MS8_MotionTimer 
+Number MS8_Lux "LUX [%.1f]" 
+Switch MS9 "Sink Motion Detect" (g_MS_Kitchen,g_Present_Sink) 
+Switch MS9_Present "Sink Motion Present" 
+Number MS9_MotionTimer 
+Group:Switch:OR(ON,OFF) g_Present_Sink 
+Group:Switch:OR(ON,OFF) g_Present_Diningtable 
+Switch MS10 "Stair 2 Motion Detect"  (g_Orientation_MasterLobby,g_Orientation_Kitchen)
+Number MS10_MotionTimer  
+Switch MS11 "Master Lobby Motion Detect" (g_Orientation_Stair3) [ "MotionSensor" ]
+Number MS11_MotionTimer 
+Number MS11_Lux "LUX [%.1f]" 
+Switch MS12 "Master Bedroom Motion Detect" (g_Orientation_MasterLobby,g_Orientation_MasterBedrm) [ "MotionSensor" ]
+Number MS12_MotionTimer 
+Number MS12_Lux "LUX [%.1f]"  
+Switch MS13 "WC2 Motion Detect" (g_Orientation_MasterBedrm) 
+Number MS13_MotionTimer 
+
+
+Group:Switch:OR(ON,OFF) g_Orientation_Livingrm
+Group:Switch:OR(ON,OFF) g_Orientation_Kitchen
+Group:Switch:OR(ON,OFF) g_Orientation_MasterLobby
+Group:Switch:OR(ON,OFF) g_Orientation_MasterBedrm
+Group:Switch:OR(ON,OFF) g_Orientation_Stair3
+
+

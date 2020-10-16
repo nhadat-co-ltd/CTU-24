@@ -1,0 +1,15 @@
+rule "Party"
+when
+Item Pt changed 
+then
+    if (Pt.state == ON) {
+		L8.sendCommand(ON)
+        L2.sendCommand(ON)
+        L1.sendCommand(ON)
+        }
+    if (Pt.state == OFF) {
+        L8.sendCommand(OFF)
+        L2.sendCommand(OFF)
+        L1.sendCommand(OFF)
+        }
+end

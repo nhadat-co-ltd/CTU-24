@@ -1,0 +1,27 @@
+Switch	L0 "Đèn hiên garage" <light> (glights) [ "Lighting" ]
+Switch	L2 "Đèn dowlight pk" <light> (glights) [ "Lighting" ]
+Switch	L1 "Đèn dowlight garage" <light> (glights) [ "Lighting" ]
+Switch	L3 "Đèn chùm pk" <light> [ "Lighting" ]
+Switch	L4 "Đèn chiếu cây pk" <light> [ "Lighting" ]
+Switch	S5_1 "Đèn chiếu tranh bếp" <light> [ "Lighting" ]
+Switch	L5 "Đèn hiên bếp" <light> (glights) [ "Lighting" ]
+Switch	L6 "Đèn thả bàn ăn" <light> [ "Lighting" ]
+Switch	L24 "Đèn trang trí pk" <light> [ "Lighting" ]
+Switch	L8 "Đèn dowlight bếp" <light> (glights) [ "Lighting" ]
+Switch	L9 "Đèn tủ bếp" <light> [ "Lighting" ]
+Switch	S8_1 "Đèn hiên t3" <light> (glights) [ "Lighting" ]
+Switch	L10 "Đèn spot phòng ngủ master" <light> [ "Lighting" ]
+Switch	L11 "Đèn chiếu tranh phòng ngủ master" <light> [ "Lighting" ]
+Switch	L12 "Đèn dowlight phòng ngủ master" <light> (glights) [ "Lighting" ]
+Switch	L13 "Đèn spot WC master" <light> (glights)  
+Switch	S10_2 "Tăng cường quạt WC master" <wallswitch> { expire="6m,command=OFF" } 
+Switch	L15 "Đèn dowlight master lobby" <light> (glights) [ "Lighting" ]
+Switch	L19 "Đèn giếng trời" <light> (glights) [ "Lighting" ]
+Switch	S16_1 "Đèn downlight phòng giặt" <light> (glights) 
+Switch	S16_2 "Mái lấy gió" <wallswitch> [ "Switchable" ]
+Switch	Aircon_LivingRm "Máy lạnh phòng khách" <wallswitch> 
+Switch	Aircon_MasterBedrm "Máy lạnh phòng ngủ Master" <wallswitch> 
+Switch	Pt "Party"
+
+
+

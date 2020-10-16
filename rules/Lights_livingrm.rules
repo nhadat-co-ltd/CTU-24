@@ -1,0 +1,55 @@
+rule "System started file Lights_livingrm"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Lights_livingrm.rules")
+end
+
+rule "Orientation"
+when
+Item g_Orientation_Livingrm changed to ON
+then
+		if(MS2_Lux.state < 8.0 && g_MS_Livingrm.state == OFF) {
+				sendCommand( glights_livingrm_dim, "25")
+                sendCommand( glights_livingrm_temp, "67")
+			} 
+end
+
+rule "Ambience"
+when
+Item g_MS_Livingrm changed to ON
+then
+    if (MS3_Lux.state < 500.0 && L2.state == OFF) {
+			MS2_MotionTimer.sendCommand(120)
+    		MS3_MotionTimer.sendCommand(120)
+   			MS4_MotionTimer.sendCommand(120)
+        	sendCommand( glights_livingrm_dim, "100")
+            sendCommand( glights_livingrm_temp, "67")
+            sendCommand( L3, ON)
+			} 
+end
+
+rule "OFF"
+when
+Item g_MS_Livingrm changed to OFF
+or
+Item g_Orientation_Livingrm changed to OFF
+then
+        var Timer offTimer
+	    offTimer = createTimer(now.plusMinutes(10)) [|
+		if (g_MS_Livingrm.state == ON || L2.state == ON) {
+				offTimer.reschedule(now.plusMinutes(10))
+			} else {
+				sendCommand( glights_livingrm, OFF)
+				sendCommand( L3, OFF)
+              }
+			]
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

@@ -1,0 +1,61 @@
+rule "System started file WC_master"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in WC_master.rules")
+end
+
+rule "WC2 Light"
+when
+Item MS13 changed 
+then
+MS13_MotionTimer.sendCommand(120)
+    if (MS13.state == ON) {
+        GH_WCmaster_play.sendCommand(ON)
+    }
+    if (MS13.state == OFF) {
+        var Timer offTimer
+	offTimer = createTimer(now.plusMinutes(2)) [|
+		if (MS10.state == ON) {
+				offTimer.reschedule(now.plusMinutes(2))
+			} else {
+				sendCommand( P2, OFF)
+                sendCommand( L13, OFF)
+				}
+			]
+         }
+end
+
+rule "WC2 Ventilation Off"
+when
+Item P2 changed from ON to OFF
+then
+	var Timer offTimer
+	offTimer = createTimer(now.plusMinutes(3)) [|
+		if (S10_2.state == OFF) {
+				sendCommand( P3, OFF)
+			} 
+			]
+end
+
+rule "WC2 Ventilation More"
+    when
+        Item S10_2 received command
+    then 
+        switch(receivedCommand) {
+        case ON: {
+        P3.sendCommand(ON)  		 
+        }
+        case OFF: {
+        P3.sendCommand(OFF) 
+        }
+    }
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

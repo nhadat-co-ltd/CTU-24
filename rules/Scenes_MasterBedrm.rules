@@ -1,0 +1,82 @@
+rule "System started file Scenes_MasterBedrm"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Scenes_MasterBedrm.rules")
+end
+
+rule "Intimate"
+when
+    Channel "mihome:86sw2:04cf8cf68836:158d0002b4a58a:ch1" triggered SHORT_PRESSED
+then
+    sendCommand( L10, OFF)
+    sendCommand( L11, OFF)
+    sendCommand( D22, "292,23,100")
+    sendCommand( glights_masterbr_dim, "35")
+    sendCommand( glights_masterbr_temp , "67")
+    sendCommand( L12, OFF)
+end
+
+rule "Reading"
+when
+    Channel "mihome:86sw2:04cf8cf68836:158d0002b4a58a:ch2" triggered SHORT_PRESSED
+then
+    sendCommand( L10, ON)
+    sendCommand( D22, "0.0,00,40")
+    sendCommand( L11, OFF)
+    sendCommand( L12, OFF)
+end
+
+rule "Off"
+when
+    Channel "mihome:86sw2:04cf8cf68836:158d0002b4a58a:dual_ch" triggered SHORT_PRESSED
+then
+    sendCommand( L10, OFF)
+    sendCommand( L11, OFF)
+    sendCommand( L12, OFF)
+    sendCommand( S8_1, OFF)
+    sendCommand( glights_masterbr_dim, "30")
+    Thread::sleep(1000)
+    sendCommand( glights_masterbr_dim, "20")
+    Thread::sleep(1000)
+    sendCommand( glights_masterbr_dim, "10")
+    Thread::sleep(1000)
+    sendCommand( glights_masterbr_dim, "0")
+        if(D22.state >= 5.0) {
+		sendCommand( D22, "60")
+        Thread::sleep(1000)
+        sendCommand( D22, "30")
+        Thread::sleep(1000)
+        sendCommand( D22, "20")
+        Thread::sleep(1000)
+        sendCommand( D22, "10")
+        Thread::sleep(1000)
+        sendCommand( D22, "0")
+			} 
+end
+
+rule "Full Lights"
+when
+Item L12 changed 
+then
+if (L12.state == ON) {
+    sendCommand( glights_masterbr_dim, "100")
+    sendCommand( glights_masterbr_temp, "30")
+    sendCommand( L11, ON)
+    sendCommand( L10, ON)
+        }
+    if (L12.state == OFF) {
+        sendCommand( L10, OFF)
+        sendCommand( L11, OFF)
+        sendCommand( D22, OFF)
+        sendCommand( glights_masterbr, OFF)                
+        }
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

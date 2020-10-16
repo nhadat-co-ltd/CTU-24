@@ -1,0 +1,65 @@
+rule "System started file Lights_masterlb"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Lights_masterlb.rules")
+end
+
+rule "Orientation"
+when
+Item g_Orientation_MasterLobby changed to ON
+then
+		if(glights_masterlb_dim.state == 0 && L15.state == OFF) {
+                MS10_MotionTimer.sendCommand(120)
+				sendCommand( glights_masterlb_dim, "50")
+                sendCommand( glights_masterlb_temp, "67")
+		}
+end
+
+rule "Ambience"
+when
+Item MS11 changed to ON
+then
+    if (L15.state == OFF) {
+			MS11_MotionTimer.sendCommand(5)
+            sendCommand( glights_masterlb_dim, "100")
+            sendCommand( glights_masterlb_temp, "67")
+			sendCommand( P6, ON)
+			} 
+end
+
+rule "Full light"
+when
+Item L15 changed 
+then
+ if (L15.state == ON) {
+       sendCommand( glights_masterlb_dim, "100")
+       sendCommand( glights_masterlb_temp, "30")
+        }
+    if (L15.state == OFF) {
+       sendCommand( glights_masterlb_temp, "67")
+         }
+end
+
+rule "OFF"
+when
+Item MS11 changed to OFF
+then
+        var Timer offTimer
+	    offTimer = createTimer(now.plusMinutes(10)) [|
+		if (MS11.state == ON || L15.state == ON) {
+				offTimer.reschedule(now.plusMinutes(10))
+			} else {
+				sendCommand( glights_masterlb, OFF)
+				sendCommand( P6, OFF)
+              }
+			]
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

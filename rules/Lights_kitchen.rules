@@ -1,0 +1,67 @@
+rule "System started file Lights_kitchen"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Lights_kitchen.rules")
+end
+
+rule "Full Lights"
+when
+Item L8 changed 
+then
+if (L8.state == ON) {
+    sendCommand( glights_kitchen_dim, "100")
+    sendCommand( glights_kitchen_temp, "30")
+        }
+    if (L8.state == OFF) {
+	   sendCommand( glights_kitchen, OFF)
+        }
+end
+
+rule "Orientation"
+when
+Item g_Orientation_Kitchen changed to ON
+then
+		if(MS6_Lux.state < 40.0 || MS7_Lux.state < 40.0) {
+                MS5_MotionTimer.sendCommand(5)
+				MS10_MotionTimer.sendCommand(5)
+				sendCommand( glights_kitchen_dim, "50")
+                sendCommand( glights_kitchen_temp, "67")
+			} 
+end
+
+rule "Ambience"
+when
+Item g_MS_Kitchen changed to ON
+then
+    if (L8.state == OFF) {
+            MS6_MotionTimer.sendCommand(120)
+            MS7_MotionTimer.sendCommand(120)
+			sendCommand( glights_kitchen_dim, "100")
+            sendCommand( glights_kitchen_temp, "67")
+            sendCommand( S5_1, ON)
+        }
+end
+
+rule "Off"
+when
+Item g_MS_Kitchen changed to OFF
+then
+        var Timer offTimer
+	    offTimer = createTimer(now.plusMinutes(5)) [|
+		if (g_MS_Kitchen.state == ON || L8.state == ON) {
+				offTimer.reschedule(now.plusMinutes(5))
+			} else {
+				sendCommand( glights_kitchen, OFF)
+                sendCommand( S5_1, OFF)
+              }
+			]
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

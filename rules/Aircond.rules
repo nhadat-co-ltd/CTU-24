@@ -1,0 +1,39 @@
+rule "Airco-nd low"
+    when
+        Item V_lv1 received command
+    then 
+        switch(receivedCommand) {
+        case ON: {
+        P11.sendCommand(ON) 
+        P12.sendCommand(OFF)
+        V_lv2.sendCommand(OFF)        
+        }
+        case OFF: {
+            if (V_lv2.state == OFF) {
+				sendCommand( P11, OFF)
+			} else {
+				
+				}    
+        }
+    }
+end
+
+rule "Airco-nd high"
+    when
+        Item V_lv2 received command
+    then 
+        switch(receivedCommand) {
+        case ON: {
+        P11.sendCommand(ON) 
+        P12.sendCommand(ON)
+        V_lv1.sendCommand(OFF)        
+        }
+        case OFF: {
+            if (V_lv1.state == OFF) {
+				sendCommand( P11, OFF)
+			} else {
+				
+				}
+        }
+    }
+end

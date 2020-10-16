@@ -1,0 +1,39 @@
+rule "System started file Lights_masterbr"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Lights_masterbr.rules")
+end
+
+rule "Orientation"
+when
+Item g_Orientation_MasterBedrm changed to ON
+then
+		if(MS12_Lux.state < 50.0) {
+                MS12_MotionTimer.sendCommand(5)
+				sendCommand( glights_masterbr_dim, "10")
+                sendCommand( glights_masterbr_temp, "67")
+			} 
+end
+
+rule "OFF"
+when
+Item g_Orientation_MasterBedrm changed to OFF
+then
+        var Timer offTimer
+	    offTimer = createTimer(now.plusMinutes(1)) [|
+		if (g_Orientation_MasterBedrm.state == ON || L12.state == ON) {
+				offTimer.reschedule(now.plusMinutes(1))
+			} else {
+				sendCommand( glights_masterbr, OFF)
+              }
+			]
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end

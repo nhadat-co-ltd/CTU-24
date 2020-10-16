@@ -1,0 +1,5 @@
+Switch	P3 "Quạt hút WC Master" <wallswitch> [ "Switchable" ] { expire="10m,command=OFF" }
+Switch	P11 "Airco-nd" <wallswitch>
+Switch	P12 "Airco-nd control" <wallswitch>
+Switch	V_lv1 "Airco-nđ low" <wallswitch> [ "Switchable" ]
+Switch	V_lv2 "Airco-nđ high" <wallswitch> [ "Switchable" ]

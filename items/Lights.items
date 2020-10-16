@@ -1,0 +1,21 @@
+Group:Switch:OR(ON,OFF) glights "Light"  
+Switch glights_philip  
+Switch glights_gagare   
+Dimmer glights_gagare_dim 
+Dimmer glights_gagare_temp  
+Switch glights_livingrm  
+Dimmer glights_livingrm_dim 
+Dimmer glights_livingrm_temp   
+Switch glights_kitchen   
+Dimmer glights_kitchen_dim 
+Dimmer glights_kitchen_temp  
+Switch glights_masterbr 
+Dimmer glights_masterbr_dim 
+Dimmer glights_masterbr_temp   
+Switch glights_masterlb (glights)  
+Dimmer glights_masterlb_dim 
+Dimmer glights_masterlb_temp 
+ 
+Switch  P2 "Đèn WC master"  
+Switch  P6 "Đèn cầu thang tầng 3" (glights)  
+Color   D22 "Đèn thả phòng ngủ master"    

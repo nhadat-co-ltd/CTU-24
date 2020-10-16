@@ -1,0 +1,30 @@
+rule "System started file Spot_lights_sink"
+	when
+		System started
+	then
+		logInfo("Logger", "System started has triggered in Spot_lights_sink.rules")
+end
+
+rule "Sink"
+when
+Item MS9 changed 
+then
+    if (MS9.state == OFF) {
+        var Timer offTimer
+	    offTimer = createTimer(now.plusMinutes(1)) [|
+		if (g_Present_Sink.state == ON) {
+				offTimer.reschedule(now.plusMinutes(2s))
+			} else {
+				sendCommand( L9, OFF)
+              }
+			]
+        }
+end
+
+rule "keep this rules in memory"
+	when
+		Time cron "0 3/30 * ? * *"
+	then
+		//logInfo("Logger","cron execution to prevent gargabe collection of compiled rules")
+		return;
+end
