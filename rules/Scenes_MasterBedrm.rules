@@ -69,7 +69,8 @@ if (L12.state == ON) {
         sendCommand( L10, OFF)
         sendCommand( L11, OFF)
         sendCommand( D22, OFF)
-        sendCommand( glights_masterbr, OFF)                
+        sendCommand( glights_masterbr_dim, "100")
+   	sendCommand( glights_masterbr_temp, "67")            
         }
 end
 
