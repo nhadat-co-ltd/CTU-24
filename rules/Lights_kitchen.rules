@@ -14,7 +14,8 @@ if (L8.state == ON) {
     sendCommand( glights_kitchen_temp, "30")
         }
     if (L8.state == OFF) {
-	   sendCommand( glights_kitchen, OFF)
+	sendCommand( glights_kitchen_dim, "100")
+    	sendCommand( glights_kitchen_temp, "67")  
         }
 end
 
