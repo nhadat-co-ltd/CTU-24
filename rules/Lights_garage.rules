@@ -4,9 +4,9 @@ Item MS1 changed
 then
     if (MS1.state == ON) {
         MS1_MotionTimer.sendCommand(120)
-        if(L1.state == OFF) {
+        if(L1.state != ON) {
 			sendCommand( glights_gagare_dim, "100")
-            sendCommand( glights_gagare_temp, "67")
+           		sendCommand( glights_gagare_temp, "67")
 			} 
         }
     if (MS1.state == OFF) {
@@ -15,17 +15,10 @@ then
 		if (MS1.state == ON || L1.state == ON) {
 				offTimer.reschedule(now.plusMinutes(2))
 			} else {
-				sendCommand( glights_gagare_dim, "60")
-                Thread::sleep(2000)
-                sendCommand( glights_gagare_dim, "30")
-                Thread::sleep(1000)
-                sendCommand( glights_gagare_dim, "20")
-                Thread::sleep(1000)
-                sendCommand( glights_gagare_dim, "10")
-                Thread::sleep(1000)
-                sendCommand( glights_gagare_dim, "0")
+		sendCommand( glights_gagare, OFF)
+		
               }
-			]
+	]
          }
 end
 
@@ -34,11 +27,19 @@ when
 Item L1 changed 
 then
     if (L1.state == ON) {
-			sendCommand( glights_gagare_dim, "100")
+	    sendCommand( glights_gagare_dim, "100")
             sendCommand( glights_gagare_temp, "30")
         }
     if (L1.state == OFF) {
-                sendCommand( glights_gagare, OFF)
+                sendCommand( glights_gagare_dim, "60")
+                Thread::sleep(2000)
+                sendCommand( glights_gagare_dim, "30")
+                Thread::sleep(1000)
+                sendCommand( glights_gagare_dim, "20")
+                Thread::sleep(1000)
+                sendCommand( glights_gagare_dim, "10")
+                Thread::sleep(1000)
+                sendCommand( glights_gagare_dim, "0")
      }  
 end
 
