@@ -9,8 +9,8 @@ rule "Orientation"
 when
 Item g_Orientation_Livingrm changed to ON
 then
-		if(MS2_Lux.state < 8.0 && g_MS_Livingrm.state == OFF) {
-				sendCommand( glights_livingrm_dim, "25")
+		if(MS2_Lux.state < 10.0 && g_MS_Livingrm.state != ON) {
+		sendCommand( glights_livingrm_dim, "25")
                 sendCommand( glights_livingrm_temp, "67")
 			} 
 end
@@ -19,13 +19,13 @@ rule "Ambience"
 when
 Item g_MS_Livingrm changed to ON
 then
-    if (MS3_Lux.state < 500.0 && L2.state == OFF) {
-			MS2_MotionTimer.sendCommand(120)
+    if (MS3_Lux.state < 500.0 && L2.state != ON) {
+		MS2_MotionTimer.sendCommand(120)
     		MS3_MotionTimer.sendCommand(120)
-   			MS4_MotionTimer.sendCommand(120)
-        	sendCommand( glights_livingrm_dim, "100")
-            sendCommand( glights_livingrm_temp, "67")
-            sendCommand( L3, ON)
+   		MS4_MotionTimer.sendCommand(120)
+               sendCommand( glights_livingrm_dim, "100")
+               sendCommand( glights_livingrm_temp, "67")
+               sendCommand( L3, ON)
 			} 
 end
 
