@@ -9,9 +9,9 @@ rule "Orientation"
 when
 Item g_Orientation_MasterLobby changed to ON
 then
-		if(glights_masterlb_dim.state == 0 && L15.state == OFF) {
+		if(glights_masterlb_dim.state == 0 && L15.state != ON) {
                 MS10_MotionTimer.sendCommand(120)
-				sendCommand( glights_masterlb_dim, "50")
+		sendCommand( glights_masterlb_dim, "50")
                 sendCommand( glights_masterlb_temp, "67")
 		}
 end
