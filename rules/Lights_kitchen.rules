@@ -23,11 +23,11 @@ rule "Orientation"
 when
 Item g_Orientation_Kitchen changed to ON
 then
-		if(MS6_Lux.state < 40.0 || MS7_Lux.state < 40.0) {
+		if(MS6_Lux.state < 40.0) {
                 MS5_MotionTimer.sendCommand(5)
 				MS10_MotionTimer.sendCommand(5)
 				sendCommand( glights_kitchen_dim, "50")
-                sendCommand( glights_kitchen_temp, "67")
+                		sendCommand( glights_kitchen_temp, "67")
 			} 
 end
 
@@ -35,10 +35,10 @@ rule "Ambience"
 when
 Item g_MS_Kitchen changed to ON
 then
-    if (L8.state == OFF) {
+    if (L8.state != ON) {
             MS6_MotionTimer.sendCommand(120)
             MS7_MotionTimer.sendCommand(120)
-			sendCommand( glights_kitchen_dim, "100")
+	    sendCommand( glights_kitchen_dim, "100")
             sendCommand( glights_kitchen_temp, "67")
             sendCommand( S5_1, ON)
         }
@@ -54,9 +54,9 @@ then
 				offTimer.reschedule(now.plusMinutes(5))
 			} else {
 				sendCommand( glights_kitchen, OFF)
-                sendCommand( S5_1, OFF)
+                		sendCommand( S5_1, OFF)
               }
-			]
+	]
 end
 
 rule "keep this rules in memory"
