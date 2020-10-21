@@ -11,7 +11,7 @@ Item g_Orientation_MasterBedrm changed to ON
 then
 		if(MS12_Lux.state < 50.0) {
                 MS12_MotionTimer.sendCommand(5)
-				sendCommand( glights_masterbr_dim, "10")
+		sendCommand( glights_masterbr_dim, "10")
                 sendCommand( glights_masterbr_temp, "67")
 			} 
 end
