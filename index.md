@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Hướng dẫn sử dụng
 
 You can use the [editor on GitHub](https://github.com/nhadat-co-ltd/CTU-24/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
